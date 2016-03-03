@@ -7,63 +7,13 @@
                 <div flex="" class="flex"></div>
             </div>
         </md-toolbar>
-        <md-table-container>
-            <table class="md-table">
-                <thead class="md-head">
-                <tr class="md-row">
-                    <th class="md-column">Name</th>
-                    <th class="md-column">can_cool</th>
-                    <th class="md-column">can_heat</th>
-                    <th class="md-column">scale</th>
-                    <th class="md-column">target</th>
-                    <th class="md-column">target_min</th>
-                    <th class="md-column">target_max</th>
-                    <th class="md-column">away_min</th>
-                    <th class="md-column">away_max</th>
-                    <th class="md-column">ambient</th>
-                    <th class="md-column">hvac_mode</th>
-                    <th class="md-column">hvac_state</th>
-                </tr>
-                </thead>
-                <tbody class="md-body">
-                <tr class="md-row">
-                    <td class="md-cell">{{thermostat.name}}</td>
-                    <td class="md-cell">{{thermostat.can_cool}}</td>
-                    <td class="md-cell">{{thermostat.can_heat}}</td>
-                    <td class="md-cell">{{thermostat.temperature_scale}}</td>
-                    <td class="md-cell">{{thermostat['target_temperature_' + (scale.is('f') ? 'f' : 'c')]}}</td>
-                    <td class="md-cell">{{thermostat['target_temperature_low_' + (scale.is('f') ? 'f' : 'c')]}}</td>
-                    <td class="md-cell">{{thermostat['target_temperature_high_' + (scale.is('f') ? 'f' : 'c')]}}</td>
-                    <td class="md-cell">{{thermostat['away_temperature_low_' + (scale.is('f') ? 'f' : 'c')]}}</td>
-                    <td class="md-cell">{{thermostat['away_temperature_high_' + (scale.is('f') ? 'f' : 'c')]}}</td>
-                    <td class="md-cell">{{thermostat['ambient_temperature_' + (scale.is('f') ? 'f' : 'c')]}}</td>
-                    <td class="md-cell">{{thermostat.hvac_mode}}</td>
-                    <td class="md-cell">{{thermostat.hvac_state}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </md-table-container>
+        <div ui-view="list@thermostat"></div>
     </md-card>
 
-    <div class="actions-fields" layout="row" flex layout-align="center center">
-        <div flex="20" layout="column">
-            <md-checkbox ng-disabled="!hvac_mode.canHeatCool()"
-                         ng-model="hvac_mode.model"
-                         ng-change="hvac_mode.change()">
-                <label>Heat-cool mode</label>
-            </md-checkbox>
-        </div>
-        <div flex="40" layout="column">
-            <input type="text"
-                   ng-if="isReady && !hvac_mode.is('heat-cool')"
-                   slider
-                   options="temperature.slider"
-                   ng-model="temperature.value">
-            <input type="text"
-                   ng-if="isReady && hvac_mode.is('heat-cool')"
-                   slider
-                   options="temperature.slider"
-                   ng-model="temperature.range">
-        </div>
+    <div class="actions-fields"
+         layout="row"
+         flex
+         layout-align="center center"
+         ui-view="item@thermostat">
     </div>
 </div>

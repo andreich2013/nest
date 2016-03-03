@@ -9,37 +9,24 @@
     function Controller($scope, nestThermostatSvc) {
 
         var proto = {
-            set: function(value) {
-                this.value = value;
-            },
-            get: function() {
-                return this.value;
-            },
-            is: function(value) {
-                return this.value === value;
-            }
-        };
-
-        var extremas = {
-            c: {
-                from: 9,
-                to: 32,
-                step: 0.5
-            },
-            f: {
-                from: 48,
-                to: 90,
-                step: 1
-            }
-        };
+                set: function(value) {
+                    this.value = value;
+                },
+                get: function() {
+                    return this.value;
+                },
+                is: function(value) {
+                    return this.value === value;
+                }
+            };
 
         $scope.isReady = false;
 
         $scope.thermostat = {};
 
         $scope.temperature = {
-            min: 9,
-            max: 32,
+            min: null,
+            max: null,
             value: null,
             slider: {},
             range: null,
@@ -78,7 +65,7 @@
             set: function(value) {
                 nestThermostatSvc.setData("hvac_mode", value);
             },
-            canHeatCool: function() {
+            canSetHeatCool: function() {
                 return $scope.thermostat.can_cool && $scope.thermostat.can_heat;
             },
             change: function() {
@@ -101,7 +88,7 @@
 
             $scope.temperature.value = data["target_temperature_" + scale];
             $scope.temperature.range = [data["target_temperature_low_" + scale], data["target_temperature_high_" + scale]].join(";")
-            angular.extend($scope.temperature.slider, extremas[scale]);
+            angular.extend($scope.temperature.slider, nestThermostatSvc.extremas[scale]);
 
             $scope.isReady = true;
 

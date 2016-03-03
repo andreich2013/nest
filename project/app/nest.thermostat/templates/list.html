@@ -1,0 +1,42 @@
+<md-table-container>
+    <table class="md-table">
+        <thead class="md-head">
+        <tr class="md-row">
+            <th class="md-column">Name</th>
+            <th class="md-column">can_cool</th>
+            <th class="md-column">can_heat</th>
+            <th class="md-column">scale</th>
+            <th class="md-column">target</th>
+            <th class="md-column">target_min</th>
+            <th class="md-column">target_max</th>
+            <th class="md-column">away_min</th>
+            <th class="md-column">away_max</th>
+            <th class="md-column">ambient</th>
+            <th class="md-column">hvac_mode</th>
+            <th class="md-column">hvac_state</th>
+        </tr>
+        </thead>
+        <tbody class="md-body">
+        <tr class="md-row">
+            <td class="md-cell">{{thermostat.name}}</td>
+            <td class="md-cell">{{thermostat.can_cool}}</td>
+            <td class="md-cell">{{thermostat.can_heat}}</td>
+            <td class="md-cell">{{thermostat.temperature_scale}}</td>
+            <td class="md-cell">
+                <b>{{thermostat['target_temperature_' + (scale.is('f') ? 'f' : 'c')]}}</b>
+            </td>
+            <td class="md-cell">
+                <b>{{thermostat['target_temperature_low_' + (scale.is('f') ? 'f' : 'c')]}}</b>
+            </td>
+            <td class="md-cell">
+                <b>{{thermostat['target_temperature_high_' + (scale.is('f') ? 'f' : 'c')]}}</b>
+            </td>
+            <td class="md-cell">{{thermostat['away_temperature_low_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+            <td class="md-cell">{{thermostat['away_temperature_high_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+            <td class="md-cell">{{thermostat['ambient_temperature_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+            <td class="md-cell">{{thermostat.hvac_mode}}</td>
+            <td class="md-cell">{{thermostat.hvac_state}}</td>
+        </tr>
+        </tbody>
+    </table>
+</md-table-container>

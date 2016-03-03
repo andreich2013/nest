@@ -18,6 +18,19 @@
 
         angular.extend(this, angular.copy(nestUtilsSvc.observer));
 
+        this.extremas = {
+            c: {
+                from: 9,
+                to: 32,
+                step: 0.5
+            },
+            f: {
+                from: 48,
+                to: 90,
+                step: 1
+            }
+        };
+
         this.setData = function(property, value) {
             var path = 'devices/thermostats/' + this.thermostat.device_id + '/' + property;
 
@@ -35,6 +48,7 @@
                 heat: cool,
                 "heat-cool": function(scale, value) {
                     var data = value.split(";");
+
                     self.setData("target_temperature_low_" + scale, +data[0]);
                     self.setData("target_temperature_high_" + scale, +data[1]);
                 },
@@ -42,6 +56,8 @@
             };
 
         }());
+
+
 
         nestConfigSvc.data.on('value', function (snapshot) {
             var data = snapshot.val();

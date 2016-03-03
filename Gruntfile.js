@@ -29,6 +29,7 @@ module.exports = function( grunt ) {
   grunt.initConfig({
     // Project settings
     _module: config,
+
     pkg: grunt.file.readJSON('package.json'),
 
     wiredep: {
@@ -99,10 +100,6 @@ module.exports = function( grunt ) {
   });
 
   grunt.registerTask('install', 'Installs dependencies', function () {
-    grunt.task.run([
-      //'clean:install'
-    ]);
-
     var tmp = config.env.indexOf((grunt.option('environment'))),
         env = tmp !== -1 ? config.env[tmp] : 'dev';
 

@@ -1,0 +1,19 @@
+<div flex="40" layout="column">
+    <md-checkbox ng-disabled="!hvac_mode.canSetHeatCool()"
+                 ng-model="hvac_mode.model"
+                 ng-change="hvac_mode.change()">
+        <label>Heat-cool mode</label>
+    </md-checkbox>
+</div>
+<div flex="60" layout="column">
+    <input type="text"
+           ng-if="isReady && !hvac_mode.is('heat-cool')"
+           slider
+           options="temperature.slider"
+           ng-model="temperature.value">
+    <input type="text"
+           ng-if="isReady && hvac_mode.is('heat-cool')"
+           slider
+           options="temperature.slider"
+           ng-model="temperature.range">
+</div>

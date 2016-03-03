@@ -30,14 +30,15 @@
     }
 
     /** @ngInject */
-    function Run($rootScope, $cookies, $location, nestConfigSvc) {
+    function Run($rootScope, $cookies, $window, nestConfigSvc) {
 
         var token = $cookies.get('nest_token');
 
         if (token) {
             nestConfigSvc.data.auth(token);
         } else {
-            $location.path('/auth/nest');
+
+            $window.location.href = '/auth/nest';
         }
 
         $rootScope.safeApply = function(fn) {
