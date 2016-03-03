@@ -30,15 +30,26 @@
     }
 
     /** @ngInject */
-    function Run($cookies, $location, nestConfigSvc) {
+    function Run($rootScope, $cookies, $location, nestConfigSvc) {
 
         var token = $cookies.get('nest_token');
 
         if (token) {
             nestConfigSvc.data.auth(token);
         } else {
-            $location('/auth/nest');
+            $location.path('/auth/nest');
         }
+
+        $rootScope.safeApply = function(fn) {
+            var phase = this.$root.$$phase;
+            if(phase == '$apply' || phase == '$digest') {
+                if(fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
+            }
+        };
     }
 
 })();

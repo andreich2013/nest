@@ -13,12 +13,8 @@
                 parent: 'nest',
                 name: 'thermostat',
                 url: '/thermostat',
-                views: {
-                    '@nest': {
-                        templateUrl: 'nest.thermostat/templates/thermostat.html',
-                        controller: 'nest.thermostat.ctrl'
-                    }
-                }
+                templateUrl: 'nest.thermostat/templates/thermostat.html',
+                controller: 'nest.thermostat.ctrl'
             });
 
     }

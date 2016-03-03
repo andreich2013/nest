@@ -1,63 +1,76 @@
+<md-progress-circular md-mode="indeterminate" md-diameter="100" ng-show="!isReady"></md-progress-circular>
 <div layout="column" layout-fill layout-align="center center" ng-show="isReady">
-    <div layout="row" flex layout-align="center center">
-        <table>
-            <thead>
-                <th>Name</th>
-                <th>can_cool</th>
-                <th>can_heat</th>
-                <th>scale</th>
-                <th>target</th>
-                <th>target_max</th>
-                <th>target_min</th>
-                <th>away_max</th>
-                <th>away_min</th>
-                <th>ambient</th>
-                <th>hvac_mode</th>
-                <th>hvac_state</th>
-                <!--<th>humidity</th>-->
-            </thead>
-            <tbdy>
-                <tr>
-                    <td>{{thermostat.name}}</td>
-                    <td>{{thermostat.can_cool}}</td>
-                    <td>{{thermostat.can_heat}}</td>
-                    <td>{{thermostat.temperature_scale}}
-                    </td>
-                    <td>{{thermostat['target_temperature_' + (temperature.isScale('f') ? 'f' : 'c')]}}</td>
-                    <td>{{thermostat['target_temperature_high_' + (temperature.isScale('f') ? 'f' : 'c')]}}</td>
-                    <td>{{thermostat['target_temperature_low_' + (temperature.isScale('f') ? 'f' : 'c')]}}</td>
-                    <td>{{thermostat['away_temperature_high_' + (temperature.isScale('f') ? 'f' : 'c')]}}</td>
-                    <td>{{thermostat['away_temperature_low_' + (temperature.isScale('f') ? 'f' : 'c')]}}</td>
-                    <td>{{thermostat['ambient_temperature_' + (temperature.isScale('f') ? 'f' : 'c')]}}</td>
-                    <td>{{thermostat.hvac_mode}}</td>
-                    <td>{{thermostat.hvac_state}}</td>
-                    <!--<td>{{thermostat.humidity}}</td>-->
+    <md-card>
+        <md-toolbar class="md-table-toolbar md-default" aria-hidden="false">
+            <div class="md-toolbar-tools">
+                <h2 class="md-title">Thermostat Data</h2>
+                <div flex="" class="flex"></div>
+            </div>
+        </md-toolbar>
+        <md-table-container>
+            <table class="md-table">
+                <thead class="md-head">
+                <tr class="md-row">
+                    <th class="md-column">Name</th>
+                    <th class="md-column">can_cool</th>
+                    <th class="md-column">can_heat</th>
+                    <th class="md-column">scale</th>
+                    <th class="md-column">target</th>
+                    <th class="md-column">target_min</th>
+                    <th class="md-column">target_max</th>
+                    <th class="md-column">away_min</th>
+                    <th class="md-column">away_max</th>
+                    <th class="md-column">ambient</th>
+                    <th class="md-column">hvac_mode</th>
+                    <th class="md-column">hvac_state</th>
                 </tr>
-            </tbdy>
-        </table>
-    </div>
-    <div layout="row" flex layout-align="center center">
-        <div flex-20 layout="column">
-            <md-checkbox ng-model="scale.value"
-                         ng-change="scale.change()">
-                <label>Temperature Scale</label>
-            </md-checkbox>
-            <md-checkbox ng-disable="hvac_mode.canAction('heat-cool')"
-                         ng-model="hvac_mode.isHeatCool"
-                         ng-change="hvac_mode.change('heat-cool')">
+                </thead>
+                <tbody class="md-body">
+                <tr class="md-row">
+                    <td class="md-cell">{{thermostat.name}}</td>
+                    <td class="md-cell">{{thermostat.can_cool}}</td>
+                    <td class="md-cell">{{thermostat.can_heat}}</td>
+                    <td class="md-cell">{{thermostat.temperature_scale}}</td>
+                    <td class="md-cell">{{thermostat['target_temperature_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+                    <td class="md-cell">{{thermostat['target_temperature_low_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+                    <td class="md-cell">{{thermostat['target_temperature_high_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+                    <td class="md-cell">{{thermostat['away_temperature_low_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+                    <td class="md-cell">{{thermostat['away_temperature_high_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+                    <td class="md-cell">{{thermostat['ambient_temperature_' + (scale.is('f') ? 'f' : 'c')]}}</td>
+                    <td class="md-cell">{{thermostat.hvac_mode}}</td>
+                    <td class="md-cell">{{thermostat.hvac_state}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+    </md-card>
+
+    <div class="actions-fields" layout="row" flex layout-align="center center">
+        <div flex="20" layout="column">
+            <md-checkbox ng-disabled="!hvac_mode.canHeatCool()"
+                         ng-model="hvac_mode.model"
+                         ng-change="hvac_mode.change()">
                 <label>Heat-cool mode</label>
             </md-checkbox>
-            <md-checkbox ng-model="hvac_mode.isOff"
-                         ng-change="hvac_mode.change('off')">
-                <label>Disable</label>
-            </md-checkbox>
         </div>
-        <div flex-40>
+        <div flex="40" layout="column">
+            <div ng-if="hvac_mode.is('heat-cool')"
+                 range-slider
+                 min="temperature.min"
+                 max="temperature.max"
+                 model-min="temperature.range.min"
+                 model-max="temperature.range.max"
+                 ng-change="temperature.change()"
+                 ng-model="temperature.range"
+                 disabled="range.disabled">
+            </div>
             <md-slider
-                    min="temperature.min"
-                    max="temperature.max"
-                    ng-model="temperature.target"
+                    ng-if="!hvac_mode.is('heat-cool')"
+                    min="{{temperature.min}}"
+                    max="{{temperature.max}}"
+                    ng-model="temperature.value"
                     ng-change="temperature.change()"
+                    ng-disabled="thermostat.hvac_mode === 'off'"
                     aria-label="blue"
                     id="temperature">
             </md-slider>

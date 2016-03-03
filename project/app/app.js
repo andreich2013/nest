@@ -7,6 +7,7 @@
             'ngSanitize',
             'ui.router',
             'ngMaterial',
+            'ui-rangeSlider',
 
             'nest.thermostat'
         ]);

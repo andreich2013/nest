@@ -72,9 +72,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-/**
-  Server our static jQuery app.
-*/
 app.use(express.static(root + '/project/app'));
 app.use('/bower_components',  express.static(root + '/project/bower_components'));
 app.use('/assets',  express.static(root + '/project/assets'));
@@ -91,12 +88,12 @@ app.get('/auth/nest', passport.authenticate('nest'));
   return the user back to the root app.
 */
 app.get('/auth/nest/callback',
-        passport.authenticate('nest', { }),
-        function(req, res) {
-          res.cookie('nest_token', req.user.accessToken);
-          res.redirect('/');
-        }
-       );
+    passport.authenticate('nest', { }),
+    function(req, res) {
+        res.cookie('nest_token', req.user.accessToken);
+        res.redirect('/');
+    }
+);
 
 /**
   Export the app

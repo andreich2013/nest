@@ -6,7 +6,7 @@
         .factory('nestThermostatSvc', Service);
 
     /** @ngInject */
-    function Service($rootScope, nestConfigSvc) {
+    function Service($rootScope, nestConfigSvc, nestUtilsSvc) {
         var self = this;
 
         this.$get = function () {
@@ -16,6 +16,8 @@
         this.structure = {};
         this.thermostat = {};
 
+        angular.extend(this, angular.copy(nestUtilsSvc.observer));
+
         this.setData = function(property, value) {
             var path = 'devices/thermostats/' + this.thermostat.device_id + '/' + property;
 
@@ -24,20 +26,18 @@
 
         this.target_temperature_strategy = (function() {
 
-            function cool(scale, value, hvac_state) {
+            function cool(scale, value) {
                 self.setData("target_temperature_" + scale, value);
-                self.setData("hvac_state", hvac_state);
             }
 
             return {
                 cool: cool,
                 heat: cool,
-                "heat-cool": function(scale, value, hvac_state) {
-                    self.setData("target_temperature_low_" + scale, value[0]);
-                    self.setData("target_temperature_high_" + scale, value[1]);
-                    self.setData("hvac_state", hvac_state);
+                "heat-cool": function(scale, value) {
+                    self.setData("target_temperature_low_" + scale, value.min);
+                    self.setData("target_temperature_high_" + scale, value.max);
                 },
-                off: function() {}
+                "off": function() {}
             };
 
         }());
@@ -74,7 +74,7 @@
             // TAH-361, device_id does not match the device's path ID
             this.thermostat.device_id = this.structure.thermostats[0];
 
-            $rootScope.$emit('thermostat:changed');
+            this.trigger('thermostat:changed');
         }.bind(this));
 
         return this;

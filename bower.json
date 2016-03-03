@@ -15,6 +15,7 @@
     "angular-sanitize": "^1.5.0",
     "angular-ui-router": "^0.2.18",
     "angular-material": "^1.0.5",
+    "angular-rangeslider": "^0.0.14",
     "firebase": "= 1.0.15"
   },
   "devDependencies": {
