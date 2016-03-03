@@ -22,12 +22,14 @@
 
         var extremas = {
             c: {
-                min: 9,
-                max: 32
+                from: 9,
+                to: 32,
+                step: 0.5
             },
             f: {
-                min: 48,
-                max: 90
+                from: 48,
+                to: 90,
+                step: 1
             }
         };
 
@@ -39,25 +41,26 @@
             min: 9,
             max: 32,
             value: null,
-            range: {
-                min: null,
-                max: null,
-                disabled: false
-            },
+            slider: {},
+            range: null,
             set: function(value) {
                 var scale = $scope.scale.get(),
                     hvac_mode = $scope.hvac_mode.get();
 
-                if(!scale || !hvac_mode) {
+                if(!scale || !hvac_mode || !value) {
                     return;
                 }
 
                 nestThermostatSvc.target_temperature_strategy[hvac_mode](scale.toLowerCase(), value);
             },
-            change: function() {
-                this.set($scope.hvac_mode.is("heat-cool")  ? this.range : this.value);
+            change: function(value) {
+                this.set(value);
             }
         };
+
+        $scope.temperature.slider.callback = function(value) {
+            $scope.temperature.change(value);
+        }
 
         $scope.scale = Object.create(proto, {});
         angular.extend($scope.scale, {
@@ -93,24 +96,16 @@
 
             scale = $scope.scale.get().toLowerCase();
 
-            $scope.temperature.value = data["target_temperature_" + scale];
-            $scope.temperature.min = extremas[scale].min;
-            $scope.temperature.max = extremas[scale].max;
-            $scope.temperature.range.min = data["target_temperature_low_" + scale];
-            $scope.temperature.range.max = data["target_temperature_high_" + scale];
-
             $scope.hvac_mode.value = data.hvac_mode;
             $scope.hvac_mode.model = $scope.hvac_mode.is('heat-cool');
+
+            $scope.temperature.value = data["target_temperature_" + scale];
+            $scope.temperature.range = [data["target_temperature_low_" + scale], data["target_temperature_high_" + scale]].join(";")
+            angular.extend($scope.temperature.slider, extremas[scale]);
 
             $scope.isReady = true;
 
             $scope.safeApply();
-        });
-
-        $scope.$watchCollection("temperature.range", function (newVal) {
-            if(newVal.min && newVal.max) {
-                $scope.temperature.change();
-            }
         });
     }
 

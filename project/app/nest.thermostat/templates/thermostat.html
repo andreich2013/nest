@@ -54,26 +54,16 @@
             </md-checkbox>
         </div>
         <div flex="40" layout="column">
-            <div ng-if="hvac_mode.is('heat-cool')"
-                 range-slider
-                 min="temperature.min"
-                 max="temperature.max"
-                 model-min="temperature.range.min"
-                 model-max="temperature.range.max"
-                 ng-change="temperature.change()"
-                 ng-model="temperature.range"
-                 disabled="range.disabled">
-            </div>
-            <md-slider
-                    ng-if="!hvac_mode.is('heat-cool')"
-                    min="{{temperature.min}}"
-                    max="{{temperature.max}}"
-                    ng-model="temperature.value"
-                    ng-change="temperature.change()"
-                    ng-disabled="thermostat.hvac_mode === 'off'"
-                    aria-label="blue"
-                    id="temperature">
-            </md-slider>
+            <input type="text"
+                   ng-if="isReady && !hvac_mode.is('heat-cool')"
+                   slider
+                   options="temperature.slider"
+                   ng-model="temperature.value">
+            <input type="text"
+                   ng-if="isReady && hvac_mode.is('heat-cool')"
+                   slider
+                   options="temperature.slider"
+                   ng-model="temperature.range">
         </div>
     </div>
 </div>
