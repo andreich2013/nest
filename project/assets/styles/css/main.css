@@ -1,0 +1,30 @@
+/* line 7, ../scss/main.scss */
+.main-content {
+  background: #009688;
+}
+
+/* line 13, ../scss/main.scss */
+md-input-container .md-input {
+  color: rgba(255, 255, 255, 0.87);
+}
+/* line 17, ../scss/main.scss */
+md-input-container .md-errors-spacer {
+  min-height: 0;
+}
+
+/* line 23, ../scss/main.scss */
+.bottom-sheet-wrapper {
+  position: absolute;
+  display: flex;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* line 31, ../scss/main.scss */
+md-bottom-sheet {
+  overflow: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+/*# sourceMappingURL=main.css.map */
