@@ -1,19 +1,31 @@
-<div flex="40" layout="column">
-    <md-checkbox ng-disabled="!hvac_mode.canSetHeatCool()"
-                 ng-model="hvac_mode.model"
-                 ng-change="hvac_mode.change()">
-        <label>Heat-cool mode</label>
-    </md-checkbox>
-</div>
-<div flex="60" layout="column">
-    <input type="text"
-           ng-if="isReady && !hvac_mode.is('heat-cool')"
-           slider
-           options="temperature.slider"
-           ng-model="temperature.value">
-    <input type="text"
-           ng-if="isReady && hvac_mode.is('heat-cool')"
-           slider
-           options="temperature.slider"
-           ng-model="temperature.range">
+<md-toolbar class="md-table-toolbar md-default" flex aria-hidden="false">
+    <div class="md-toolbar-tools">
+        <h2 class="md-title">{{thermostat.name_long}}</h2>
+        <div flex="" class="flex"></div>
+    </div>
+</md-toolbar>
+<div flex
+     layout="column"
+     layout-gt-sm="row"
+     layout-fill
+     class="data-item">
+    <div flex="30">
+        <md-checkbox ng-disabled="!hvac_mode.canSetHeatCool()"
+                     ng-model="hvac_mode.model"
+                     ng-change="hvac_mode.change()">
+            <label>Heat-cool mode</label>
+        </md-checkbox>
+    </div>
+    <div flex="70">
+        <input type="text"
+               ng-if="isReady && !hvac_mode.is('heat-cool')"
+               slider
+               options="temperature.slider"
+               ng-model="temperature.value">
+        <input type="text"
+               ng-if="isReady && hvac_mode.is('heat-cool')"
+               slider
+               options="temperature.slider"
+               ng-model="temperature.range">
+    </div>
 </div>

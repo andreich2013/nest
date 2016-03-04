@@ -60,3 +60,11 @@ md-bottom-sheet {
 .jslider div.jslider-bg i {
   background: rgba(0,0,0,0.26);
 }
+
+.data-wrapper md-card {
+  width: 100%;
+}
+
+.data-wrapper md-card .data-item {
+  padding: 10px 24px;
+}

@@ -1,19 +1,27 @@
 <md-progress-circular md-mode="indeterminate" md-diameter="100" ng-show="!isReady"></md-progress-circular>
-<div layout="column" layout-fill layout-align="center center" ng-show="isReady">
-    <md-card>
-        <md-toolbar class="md-table-toolbar md-default" aria-hidden="false">
-            <div class="md-toolbar-tools">
-                <h2 class="md-title">Thermostat Data</h2>
-                <div flex="" class="flex"></div>
-            </div>
-        </md-toolbar>
-        <div ui-view="list@thermostat"></div>
-    </md-card>
-
-    <div class="actions-fields"
-         layout="row"
-         flex
+<div layout="row"
+     layout-fill
+     layout-align="center center"
+     ng-show="isReady">
+    <div flex="100"
+         flex-gt-md="80"
+         layout="column"
+         layout-fill
          layout-align="center center"
-         ui-view="item@thermostat">
+         class="data-wrapper">
+        <md-card>
+            <md-toolbar class="md-table-toolbar md-default" aria-hidden="false">
+                <div class="md-toolbar-tools">
+                    <h2 class="md-title">Thermostat Data</h2>
+                    <div flex="" class="flex"></div>
+                </div>
+            </md-toolbar>
+            <div ui-view="list@thermostat"></div>
+        </md-card>
+
+        <md-card layout="column"
+                 layout-align="center center"
+                 ui-view="item@thermostat">
+        </md-card>
     </div>
 </div>

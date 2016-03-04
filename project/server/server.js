@@ -95,6 +95,10 @@ app.get('/auth/nest/callback',
     }
 );
 
+app.get('/thermostat', function(req, res) {
+    res.redirect('/');
+});
+
 /**
   Export the app
 */
